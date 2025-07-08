@@ -1,0 +1,31 @@
+<header id="header" class="container mx-auto py-4">
+    <ul class="nav flex justify-between align-center">
+        <li>
+            <a href="/"
+               class="{% if request.path == '/' %} text-green-300 {% else %} text-white {% endif %} hover:text-green-300 duration-300">Главная</a>
+        </li>
+
+        <li>
+            <a href="/current_time"
+               class="{% if request.path == '/current_time' %} text-green-300 {% else %} text-white {% endif %} hover:text-green-300 duration-300">Текущее
+                время</a>
+        </li>
+
+        <li>
+            <a href="/workdir"
+               class="{% if request.path == '/workdir' %} text-green-300 {% else %} text-white {% endif %} hover:text-green-300 duration-300">Рабочая
+                директория</a>
+        </li>
+
+        <li>
+            <a href="/recipes"
+               class="{% if request.path == '/recipes' %} text-green-300 {% else %} text-white {% endif %} hover:text-green-300 duration-300">Рецепты</a>
+        </li>
+
+        <li>
+            <a href="{% url 'phones_magazine' %}"
+               class="{% if request.resolver_match.url_name == 'phones_magazine' %} text-green-300 {% else %} text-white {% endif %} hover:text-green-300 duration-300">Телефоны</a>
+        </li>
+
+    </ul>
+</header>

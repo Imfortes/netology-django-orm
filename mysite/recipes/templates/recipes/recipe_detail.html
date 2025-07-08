@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Рецепт name
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto">
+        <a href="{% url 'recipes' %}" class="inline-block mb-6 text-green-400 hover:text-green-300">
+            ← Назад к рецептам
+        </a>
+
+    {% if recipe %}
+
+
+        <h1 class="text-3xl font-bold mb-6" id="{{ recipe.id }}">{{ recipe.name }}</h1>
+
+        <div class="mb-6">
+        <label class="block mb-2">Количество порций:</label>
+        <input type="number" min="1" value="1" data-original="1" class="person-counter border rounded px-3 py-2 w-20">
+        </div>
+
+        <h2 class="text-xl font-semibold mb-4">Ингредиенты:</h2>
+        <ul>
+            {% for ingredient, counter in recipe.ingredients.items %}
+            	<li class="ingredient-item">
+                    {{ ingredient }}: <span class="ingredient-counter">{{ counter }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+
+    {% else %}
+        <p>
+            Рецепт не найден!
+        </p>
+    {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const personCounter = document.querySelector('.person-counter')
+        const ingredientItems = document.querySelectorAll('.ingredient-item')
+        if (personCounter && ingredientItems) {
+            personCounter.addEventListener('input', e => {
+                const multi = parseInt(e.target.value) || 1
+
+                ingredientItems.forEach(item => {
+                    const counterEl = item.querySelector('.ingredient-counter')
+                    const counterElText = item.textContent
+
+                    const original = counterEl.dataset.original || counterEl.textContent;
+                    counterEl.dataset.original = original;
+
+                    {#const parts = counterEl.textContent.trim().split(' ')#}
+                    {#const value = parseInt(parts[0])#}
+                    {#const unit = parts.slice(1).join(' ')#}
+
+                    const [value, ...unitParts] = original.trim().split(' ');
+                    const numericValue = parseFloat(value.replace(',', '.'));
+                    const unit = unitParts.join(' ');
+
+                    if (!isNaN(value)) {
+                        const newValue = (value * multi).toFixed(1)
+                        counterEl.textContent = `${newValue} ${unit}`
+                    }
+                })
+            })
+        }
+    })
+</script>
+{% endblock %}

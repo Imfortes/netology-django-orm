@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ phone.name }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto">
+
+        <a href="{% url 'phones_magazine' %}" class="inline-block mb-6 text-green-400 hover:text-green-300">
+            ← Назад в каталог телефонов
+        </a>
+
+        <h1>
+            {{ phone.name }}
+        </h1>
+
+        <h2>
+            {{ phone.price }}
+        </h2>
+
+        <img src="{{ phone.image }}" alt="">
+
+    </div>
+
+{% endblock %}

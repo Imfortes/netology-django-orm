@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Мобильные телефоны
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-6">
+            Телефоны
+        </h1>
+
+        <div class="text-xl font-semibold mb-4">
+            <strong>Сортировка:</strong>
+            <a href="?sort=name"
+               class="{% if request.GET.sort == 'name' or not request.GET.sort %} text-green-300{% else %}text-white{% endif %} hover:text-green-300">По
+                названию</a> |
+            <a href="?sort=min_price"
+               class="{% if request.GET.sort == 'min_price' %} text-green-300{% else %}text-white{% endif %} hover:text-green-300">Сначала
+                дешёвые</a> |
+            <a href="?sort=max_price"
+               class="{% if request.GET.sort == 'max_price' %} text-green-300{% else %}text-white{% endif %} hover:text-green-300">Сначала
+                дорогие</a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+            {% for phone in phones %}
+
+                <div class="card">
+                    <a href="{% url 'phone_detail' phone.slug %}">
+                        <img class="rounded-t-lg" src="{{ phone.image }}" alt=""/>
+
+                        <div class="p-5 flex flex-col flex-start">
+                            <h5 class="mb-2 text-lg font-bold tracking-tight"> {{ phone.name }} </h5>
+                            <h6>{{ phone.price }}</h6>
+
+                            <a href="{% url 'phone_detail' phone.slug %}"
+                               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Read more
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                </svg>
+                            </a>
+                            <small>
+                                {{ phone.release_date }}
+                            </small>
+                        </div>
+
+                    </a>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
